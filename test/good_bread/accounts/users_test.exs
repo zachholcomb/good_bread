@@ -39,5 +39,35 @@ defmodule GoodBread.Accounts.UsersTest do
       user = user_fixture()
       assert Accounts.list_users() == [user]
     end
+
+    test "get a single user" do
+      user = user_fixture()
+      assert Accounts.get_user!(user.id) == user
+    end
+
+    test "update a user with valid attrs" do
+      user = user_fixture()
+      assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
+      assert user.name == "Zerch Holcomb"
+      assert user.email == "zach@example.com"
+      assert user.address == "594 Hunter St."
+    end
+
+    test "update a user cannot update user with invalid attrs" do
+       user = user_fixture()
+       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
+       assert user.name == "Zach Holcomb"
+    end
+
+    test "delete a user" do
+      user = user_fixture()
+      assert {:ok, %User{}} = Accounts.delete_user(user)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
+    end
+
+    test "change user returns a user changeset" do
+      user = user_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_user(user)
+    end
   end
 end
