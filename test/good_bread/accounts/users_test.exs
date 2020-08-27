@@ -34,5 +34,10 @@ defmodule GoodBread.Accounts.UsersTest do
       user = user_fixture(@valid_attrs)
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@valid_attrs)
     end
+
+    test "list all users" do
+      user = user_fixture()
+      assert Accounts.list_users() == [user]
+    end
   end
 end
