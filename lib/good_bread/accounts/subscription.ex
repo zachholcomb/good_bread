@@ -3,8 +3,8 @@ defmodule GoodBread.Accounts.Subscription do
   import Ecto.Changeset
 
   schema "subscriptions" do
-    field :type, :string
-    belongs_to :user_id, GoodBread.Accounts.User
+    field :type, :string, default: "Weekly"
+    belongs_to :user, GoodBread.Accounts.User
 
     timestamps()
   end
@@ -12,7 +12,8 @@ defmodule GoodBread.Accounts.Subscription do
   @doc false
   def changeset(subscription, attrs) do
     subscription
-    |> cast(attrs, [:type, :user_id])
-    |> validate_required([:type, :user_id])
+    |> cast(attrs, [:type])
+    |> validate_required([:type])
+    |> put_assoc(:user, attrs.user)
   end
 end

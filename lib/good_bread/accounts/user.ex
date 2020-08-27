@@ -16,6 +16,7 @@ defmodule GoodBread.Accounts.User do
     user
     |> cast(attrs, [:name, :email, :address])
     |> unique_constraint(:email)
-    |> validate_required([:name, :email, :address])
+    |> validate_required([:name, :email, :address])\
+    |> cast_assoc(:subscriptions)
   end
 end
