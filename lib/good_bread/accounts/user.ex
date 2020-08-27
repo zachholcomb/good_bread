@@ -14,6 +14,7 @@ defmodule GoodBread.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :email, :address])
+    |> unique_constraint(:email)
     |> validate_required([:name, :email, :address])
   end
 end
