@@ -10,7 +10,7 @@ defmodule GoodBread.Items.Item do
   end
 
   @doc false
-  def changest(item, attrs) do
+  def changeset(item, attrs) do
     item
     |> cast(attrs, [:name, :price])
     |> validate_required([:name, :price])
