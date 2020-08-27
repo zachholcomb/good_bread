@@ -21,6 +21,7 @@ defmodule GoodBread.Accounts.SubscriptionsTest do
       user = user_fixture()
       subscription_attrs = %{type: 0, user_id: user.id}
       assert {:ok, %Subscription = subscription} = Accounts.create_subscription(subscription_attrs)
+      assert user.subscriptions == [subscription]
     end
   end
 end

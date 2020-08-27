@@ -6,7 +6,7 @@ defmodule GoodBread.Accounts.User do
     field :name, :string
     field :email, :string
     field :address, :string
-    has_many :subscriptions, Accounts.Subscription
+    has_many :subscriptions, GoodBread.Accounts.Subscription
 
     timestamps()
   end

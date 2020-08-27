@@ -4,7 +4,7 @@ defmodule GoodBread.Accounts.Subscription do
 
   schema "subscriptions" do
     field :type, :string
-    belongs_to :user_id, Accounts.User
+    belongs_to :user_id, GoodBread.Accounts.User
 
     timestamps()
   end
