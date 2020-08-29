@@ -2,6 +2,7 @@ defmodule GoodBread.Accounts.UsersTest do
   use GoodBread.DataCase
 
   alias GoodBread.Accounts
+  alias GoodBread.Repo
 
   describe "users" do
     alias GoodBread.Accounts.User
@@ -17,6 +18,7 @@ defmodule GoodBread.Accounts.UsersTest do
         |> Accounts.create_user
 
       user
+      |> Repo.preload(:subscriptions)
     end
 
     test "user can be created with valid attributes" do

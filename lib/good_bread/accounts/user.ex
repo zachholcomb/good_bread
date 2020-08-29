@@ -6,6 +6,7 @@ defmodule GoodBread.Accounts.User do
     field :name, :string
     field :email, :string
     field :address, :string
+    has_one :subscriptions, GoodBread.Accounts.Subscription
 
     timestamps()
   end
@@ -15,6 +16,7 @@ defmodule GoodBread.Accounts.User do
     user
     |> cast(attrs, [:name, :email, :address])
     |> unique_constraint(:email)
-    |> validate_required([:name, :email, :address])
+    |> validate_required([:name, :email, :address])\
+    |> cast_assoc(:subscriptions)
   end
 end
