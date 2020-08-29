@@ -35,7 +35,7 @@ defmodule GoodBread.Accounts.SubscriptionsTest do
 
       user = Accounts.get_user!(user.id)
       subscription = Accounts.get_subscription!(subscription.id)
-      assert user.subscriptions == [subscription]
+      assert user.subscriptions == subscription
     end
 
     test "subscriptions type default value" do
