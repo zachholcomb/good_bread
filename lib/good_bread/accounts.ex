@@ -13,10 +13,12 @@ defmodule GoodBread.Accounts do
 
   def list_users do
     Repo.all(User)
+    |> Repo.preload(:subscriptions)
   end
 
   def get_user!(id) do
     Repo.get!(User, id)
+    |> Repo.preload(:subscriptions)
   end
 
   def update_user(%User{} = user, attrs) do
@@ -39,5 +41,20 @@ defmodule GoodBread.Accounts do
     %Subscription{}
     |> Subscription.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def list_subscriptions do
+    Repo.all(Subscription)
+    |> Repo.preload(:user)
+  end
+
+  def get_subscription!(id) do
+    Repo.get!(Subscription, id)
+  end
+
+  def update_subscription(%Subscription{} = subscription, attrs) do
+    subscription
+    |> Subscription.changeset(attrs)
+    |> Repo.update()
   end
 end
