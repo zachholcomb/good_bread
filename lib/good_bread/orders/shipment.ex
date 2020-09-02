@@ -15,5 +15,7 @@ defmodule GoodBread.Orders.Shipment do
     shipment
     |> cast(attrs, [:status, :delivery_date])
     |> validate_required([:status, :delivery_date])
+    |> put_assoc(:user, attrs.user)
+    |> put_assoc(:subscription, attrs.subscription)
   end
 end

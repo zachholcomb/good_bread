@@ -5,6 +5,7 @@ defmodule GoodBread.Accounts.Subscription do
   schema "subscriptions" do
     field :type, :string, default: "Weekly"
     belongs_to :user, GoodBread.Accounts.User
+    has_many :shipments, GoodBread.Orders.Shipment
 
     timestamps()
   end
