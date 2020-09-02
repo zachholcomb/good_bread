@@ -37,6 +37,7 @@ defmodule GoodBread.Orders.ShipmentTest do
         |> Accounts.create_subscription()
 
       subscription
+      |> Repo.preload(:user)
     end
 
     def shipment_fixture(subscription, user) do
@@ -49,14 +50,24 @@ defmodule GoodBread.Orders.ShipmentTest do
         attrs
         |> Enum.into(attrs)
         |> Orders.create_shipment()
-
+      shipment
+      |> Repo.preload(:subscription)
     end
 
-    test "user with a subscription can have orders" do
+    test "user with a subscription can create shipments" do
       user = user_fixture()
       subscription = subscription_fixture(user)
-      shipment = shipment_fixture(subscription, user)
-
+      attrs = %{
+                subscription: subscription,
+                user: user,
+                status: "shipped",
+                delivery_date: "8/28/2020"
+              }
+      assert {:ok, %Shipment{} = shipment} = Orders.create_shipment(attrs)
+      user = Accounts.get_user!(user.id)
+      assert List.first(user.shipments).id == shipment.id
+      assert subscription.id == shipment.subscription_id
+      assert user.id == shipment.user_id
     end
   end
 end
