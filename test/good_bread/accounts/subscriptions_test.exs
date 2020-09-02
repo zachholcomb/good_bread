@@ -59,5 +59,15 @@ defmodule GoodBread.Accounts.SubscriptionsTest do
       subscription = subscription_fixture(subscription_attrs)
       assert Accounts.list_subscriptions() == [subscription]
     end
+
+    test "user can cancel subscription" do
+      user = user_fixture()
+      subscription_attrs = %{user: user}
+      subscription = subscription_fixture(subscription_attrs)
+      assert {:ok, %Subscription{}} = Accounts.delete_subscription(subscription)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_subscription!(subscription.id) end
+      user = Accounts.get_user!(user.id)
+      assert user.subscriptions == nil
+    end
   end
 end

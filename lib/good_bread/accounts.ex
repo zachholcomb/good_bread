@@ -57,4 +57,8 @@ defmodule GoodBread.Accounts do
     |> Subscription.changeset(attrs)
     |> Repo.update()
   end
+
+  def delete_subscription(%Subscription{} = subscription) do
+    Repo.delete(subscription)
+  end
 end
