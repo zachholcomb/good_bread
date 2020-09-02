@@ -18,7 +18,7 @@ defmodule GoodBread.Accounts do
 
   def get_user!(id) do
     Repo.get!(User, id)
-    |> Repo.preload(:subscriptions)
+    |> Repo.preload([:subscriptions, :shipments])
   end
 
   def update_user(%User{} = user, attrs) do

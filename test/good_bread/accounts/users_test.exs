@@ -21,6 +21,16 @@ defmodule GoodBread.Accounts.UsersTest do
       |> Repo.preload(:subscriptions)
     end
 
+    def get_user_fixture(attrs \\ %{}) do
+      {:ok, user} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Accounts.create_user
+
+      user
+      |> Repo.preload([:subscriptions, :shipments])
+    end
+
     test "user can be created with valid attributes" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.email == "byrdlike@gmail.com"
@@ -43,7 +53,7 @@ defmodule GoodBread.Accounts.UsersTest do
     end
 
     test "get a single user" do
-      user = user_fixture()
+      user = get_user_fixture()
       assert Accounts.get_user!(user.id) == user
     end
 
